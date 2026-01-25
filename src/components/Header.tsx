@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const navLinks = [
-  { name: 'Destinations', href: '#destinations' },
-  { name: 'Experiences', href: '#experiences' },
-  { name: 'Plan Your Trip', href: '#plan-trip' },
-  { name: 'About Morocco', href: '#about' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'Destinations', href: '/#destinations' },
+  { name: 'Experiences', href: '/#experiences' },
+  { name: 'Plan Your Trip', href: '/plan-trip' },
+  { name: 'About Morocco', href: '/#about' },
+  { name: 'Contact', href: '/#contact' },
 ];
 
 export const Header = () => {
@@ -43,7 +44,7 @@ export const Header = () => {
               asChild
               className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-full px-6"
             >
-              <a href="#plan-trip">Plan Your Trip</a>
+              <Link to="/plan-trip">Plan Your Trip</Link>
             </Button>
           </div>
 
@@ -81,7 +82,7 @@ export const Header = () => {
                 asChild
                 className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-full mt-4 w-full"
               >
-                <a href="#plan-trip" onClick={() => setIsOpen(false)}>Plan Your Trip</a>
+                <Link to="/plan-trip" onClick={() => setIsOpen(false)}>Plan Your Trip</Link>
               </Button>
             </nav>
           </motion.div>
