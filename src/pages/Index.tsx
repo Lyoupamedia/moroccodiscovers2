@@ -5,6 +5,7 @@ import { ExperiencesSection } from '@/components/ExperiencesSection';
 import { WhyMoroccoSection } from '@/components/WhyMoroccoSection';
 import { TestimonialsSection } from '@/components/TestimonialsSection';
 import { TravelEssentialsSection } from '@/components/TravelEssentialsSection';
+import { TripPlannerForm } from '@/components/TripPlannerForm';
 import { CTASection } from '@/components/CTASection';
 import { Footer } from '@/components/Footer';
 import { CookieBanner } from '@/components/CookieBanner';
@@ -19,6 +20,7 @@ const Index = () => {
       <WhyMoroccoSection />
       <TestimonialsSection />
       <TravelEssentialsSection />
+      <TripPlannerForm />
       <CTASection />
       <Footer />
       <CookieBanner />

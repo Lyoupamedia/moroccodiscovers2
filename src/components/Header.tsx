@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const navLinks = [
   { name: 'Destinations', href: '#destinations' },
   { name: 'Experiences', href: '#experiences' },
-  { name: 'Blog', href: '#blog' },
+  { name: 'Plan Your Trip', href: '#plan-trip' },
   { name: 'About Morocco', href: '#about' },
   { name: 'Contact', href: '#contact' },
 ];
@@ -39,8 +39,11 @@ export const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-full px-6">
-              Plan Your Trip
+            <Button 
+              asChild
+              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-full px-6"
+            >
+              <a href="#plan-trip">Plan Your Trip</a>
             </Button>
           </div>
 
@@ -74,8 +77,11 @@ export const Header = () => {
                   {link.name}
                 </a>
               ))}
-              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-full mt-4 w-full">
-                Plan Your Trip
+              <Button 
+                asChild
+                className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-full mt-4 w-full"
+              >
+                <a href="#plan-trip" onClick={() => setIsOpen(false)}>Plan Your Trip</a>
               </Button>
             </nav>
           </motion.div>
