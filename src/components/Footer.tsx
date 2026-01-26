@@ -1,4 +1,12 @@
 import { Mail, Phone, MapPin } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
+const quickLinks = [
+  { name: 'Destinations', href: '/#destinations' },
+  { name: 'Experiences', href: '/#experiences' },
+  { name: 'About Us', href: '/about' },
+  { name: 'Contact', href: '/contact' },
+];
 
 export const Footer = () => {
   return (
@@ -7,10 +15,10 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="md:col-span-2">
-            <a href="/" className="flex items-center gap-2 mb-4">
+            <Link to="/" className="flex items-center gap-2 mb-4">
               <span className="font-heading text-2xl font-bold text-primary">Morocco</span>
               <span className="font-heading text-2xl font-light">Discovers</span>
-            </a>
+            </Link>
             <p className="text-primary-foreground/70 max-w-md leading-relaxed">
               Your gateway to authentic Moroccan experiences. From ancient medinas to golden dunes, 
               we craft unforgettable journeys.
@@ -21,11 +29,17 @@ export const Footer = () => {
           <div>
             <h4 className="font-heading font-bold text-lg mb-4">Quick Links</h4>
             <ul className="space-y-2">
-              {['Destinations', 'Experiences', 'Blog', 'About Us', 'Contact'].map((link) => (
-                <li key={link}>
-                  <a href="#" className="text-primary-foreground/70 hover:text-primary transition-colors">
-                    {link}
-                  </a>
+              {quickLinks.map((link) => (
+                <li key={link.name}>
+                  {link.href.startsWith('/') && !link.href.includes('#') ? (
+                    <Link to={link.href} className="text-primary-foreground/70 hover:text-primary transition-colors">
+                      {link.name}
+                    </Link>
+                  ) : (
+                    <a href={link.href} className="text-primary-foreground/70 hover:text-primary transition-colors">
+                      {link.name}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -54,15 +68,15 @@ export const Footer = () => {
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-primary-foreground/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-primary-foreground/50 text-sm">
-            © 2024 Morocco Discovers. All rights reserved.
+            © {new Date().getFullYear()} Morocco Discovers. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <a href="#" className="text-primary-foreground/50 hover:text-primary text-sm transition-colors">
+            <Link to="/privacy-policy" className="text-primary-foreground/50 hover:text-primary text-sm transition-colors">
               Privacy Policy
-            </a>
-            <a href="#" className="text-primary-foreground/50 hover:text-primary text-sm transition-colors">
+            </Link>
+            <Link to="/terms-of-service" className="text-primary-foreground/50 hover:text-primary text-sm transition-colors">
               Terms of Service
-            </a>
+            </Link>
           </div>
         </div>
       </div>
