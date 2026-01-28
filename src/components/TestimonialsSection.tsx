@@ -1,5 +1,12 @@
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
 
 const testimonials = [
   {
@@ -52,15 +59,9 @@ const testimonials = [
   },
 ];
 
-const TestimonialCard = ({ testimonial, index }: { testimonial: typeof testimonials[0]; index: number }) => {
+const TestimonialCard = ({ testimonial }: { testimonial: typeof testimonials[0] }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="p-6 rounded-2xl bg-card border border-border"
-    >
+    <div className="p-6 rounded-2xl bg-card border border-border h-full">
       {/* Stars */}
       <div className="flex gap-1 mb-4">
         {[...Array(5)].map((_, i) => (
@@ -97,7 +98,7 @@ const TestimonialCard = ({ testimonial, index }: { testimonial: typeof testimoni
           {testimonial.destination}
         </a>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
@@ -123,12 +124,40 @@ export const TestimonialsSection = () => {
           </p>
         </motion.div>
 
-        {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <TestimonialCard key={index} testimonial={testimonial} index={index} />
-          ))}
-        </div>
+        {/* Testimonials Carousel */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <Carousel
+            opts={{
+              align: 'start',
+              loop: true,
+              slidesToScroll: 2,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-6">
+              {testimonials.map((testimonial, index) => (
+                <CarouselItem 
+                  key={index} 
+                  className="pl-6 basis-full md:basis-1/2"
+                >
+                  <TestimonialCard testimonial={testimonial} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden md:flex -left-12 bg-primary text-primary-foreground hover:bg-primary/90 border-none" />
+            <CarouselNext className="hidden md:flex -right-12 bg-primary text-primary-foreground hover:bg-primary/90 border-none" />
+          </Carousel>
+          
+          {/* Mobile navigation hint */}
+          <div className="flex justify-center gap-2 mt-6 md:hidden">
+            <span className="text-muted-foreground text-sm">Swipe to read more stories</span>
+          </div>
+        </motion.div>
 
         {/* Stats */}
         <motion.p
