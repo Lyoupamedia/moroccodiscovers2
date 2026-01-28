@@ -1,5 +1,12 @@
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
 
 // Import destination images
 import marrakech from '@/assets/marrakech.jpg';
@@ -30,15 +37,9 @@ const destinations = [
   { name: 'Agadir', subtitle: 'Beach Paradise', image: agadir },
 ];
 
-const DestinationCard = ({ destination, index }: { destination: typeof destinations[0]; index: number }) => {
+const DestinationCard = ({ destination }: { destination: typeof destinations[0] }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="card-destination group aspect-[4/5]"
-    >
+    <div className="card-destination group aspect-[4/5]">
       <img
         src={destination.image}
         alt={destination.name}
@@ -55,7 +56,7 @@ const DestinationCard = ({ destination, index }: { destination: typeof destinati
           <ArrowRight className="w-4 h-4" />
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
@@ -82,12 +83,40 @@ export const DestinationsSection = () => {
           </p>
         </motion.div>
 
-        {/* Destinations Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {destinations.map((destination, index) => (
-            <DestinationCard key={destination.name} destination={destination} index={index} />
-          ))}
-        </div>
+        {/* Destinations Carousel */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <Carousel
+            opts={{
+              align: 'start',
+              loop: true,
+              slidesToScroll: 4,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-4">
+              {destinations.map((destination) => (
+                <CarouselItem 
+                  key={destination.name} 
+                  className="pl-4 basis-full sm:basis-1/2 lg:basis-1/4"
+                >
+                  <DestinationCard destination={destination} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden md:flex -left-12 bg-primary text-primary-foreground hover:bg-primary/90 border-none" />
+            <CarouselNext className="hidden md:flex -right-12 bg-primary text-primary-foreground hover:bg-primary/90 border-none" />
+          </Carousel>
+          
+          {/* Mobile navigation hint */}
+          <div className="flex justify-center gap-2 mt-6 md:hidden">
+            <span className="text-muted-foreground text-sm">Swipe to explore more</span>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
