@@ -6,6 +6,7 @@ import { WhyMoroccoSection } from '@/components/WhyMoroccoSection';
 import { TestimonialsSection } from '@/components/TestimonialsSection';
 import { TravelEssentialsSection } from '@/components/TravelEssentialsSection';
 import { CTASection } from '@/components/CTASection';
+import { BlogsSection } from '@/components/BlogsSection';
 import { Footer } from '@/components/Footer';
 import { CookieBanner } from '@/components/CookieBanner';
 
@@ -20,6 +21,7 @@ const Index = () => {
       <TestimonialsSection />
       <TravelEssentialsSection />
       <CTASection />
+      <BlogsSection />
       <Footer />
       <CookieBanner />
     </div>
