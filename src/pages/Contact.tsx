@@ -38,26 +38,26 @@ const Contact = () => {
     {
       icon: Mail,
       title: 'Email',
-      content: 'hello@moroccodiscovers.com',
+      content: 'info@moroccodiscovers.com',
       description: 'Send us an email anytime'
     },
     {
       icon: Phone,
       title: 'Phone',
-      content: '+212 5XX XXX XXX',
+      content: '+34 666 003 838',
       description: 'Mon-Fri from 9am to 6pm'
     },
     {
       icon: MapPin,
       title: 'Office',
-      content: 'Marrakech, Morocco',
+      content: 'Palma de Mallorca, Spain',
       description: 'Our headquarters'
     },
     {
       icon: Clock,
       title: 'Business Hours',
       content: 'Mon - Fri: 9:00 - 18:00',
-      description: 'Morocco Time (GMT+1)'
+      description: 'Central European Time (CET)'
     }
   ];
 
