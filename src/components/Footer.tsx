@@ -51,15 +51,15 @@ export const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-center gap-3 text-primary-foreground/70">
                 <Mail className="w-5 h-5 text-primary" />
-                hello@moroccodiscovers.com
+                info@moroccodiscovers.com
               </li>
               <li className="flex items-center gap-3 text-primary-foreground/70">
                 <Phone className="w-5 h-5 text-primary" />
-                +212 5XX XXX XXX
+                +34 666 003 838
               </li>
               <li className="flex items-center gap-3 text-primary-foreground/70">
                 <MapPin className="w-5 h-5 text-primary" />
-                Marrakech, Morocco
+                Palma de Mallorca, Spain
               </li>
             </ul>
           </div>
