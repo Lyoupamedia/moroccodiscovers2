@@ -20,8 +20,8 @@ const Index = () => {
       <WhyMoroccoSection />
       <TestimonialsSection />
       <TravelEssentialsSection />
-      <CTASection />
       <BlogsSection />
+      <CTASection />
       <Footer />
       <CookieBanner />
     </div>

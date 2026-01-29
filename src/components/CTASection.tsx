@@ -29,8 +29,7 @@ export const CTASection = () => {
             </Button>
             <Button 
               size="lg" 
-              variant="outline" 
-              className="border-primary-foreground/50 text-primary-foreground hover:bg-primary-foreground/10 rounded-full px-8 py-6 text-lg"
+              className="bg-secondary hover:bg-secondary/90 text-secondary-foreground font-semibold rounded-full px-8 py-6 text-lg"
             >
               <Phone className="w-5 h-5 mr-2" />
               Call Us Now
