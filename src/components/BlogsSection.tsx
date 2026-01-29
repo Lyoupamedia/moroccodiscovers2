@@ -107,7 +107,7 @@ const BlogCard = ({ blog }: { blog: typeof blogs[0] }) => {
 
 export const BlogsSection = () => {
   return (
-    <section className="py-24 bg-background">
+    <section id="blogs" className="py-24 bg-background">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div
