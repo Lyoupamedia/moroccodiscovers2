@@ -140,7 +140,7 @@ export const TestimonialsSection = () => {
             }}
             plugins={[
               Autoplay({
-                delay: 5000,
+                delay: 3000,
                 stopOnInteraction: true,
                 stopOnMouseEnter: true,
               }),
