@@ -62,13 +62,14 @@ export const HeroSection = () => {
             <Button 
               size="lg" 
               className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-full px-8 py-6 text-lg shadow-gold"
+              onClick={() => document.getElementById('destinations')?.scrollIntoView({ behavior: 'smooth' })}
             >
               Explore Destinations
             </Button>
             <Button 
               size="lg" 
-              variant="outline" 
-              className="border-primary-foreground/50 text-primary-foreground hover:bg-primary-foreground/10 rounded-full px-8 py-6 text-lg"
+              className="bg-secondary hover:bg-secondary/90 text-secondary-foreground font-semibold rounded-full px-8 py-6 text-lg"
+              onClick={() => document.getElementById('experiences')?.scrollIntoView({ behavior: 'smooth' })}
             >
               View Experiences
             </Button>
