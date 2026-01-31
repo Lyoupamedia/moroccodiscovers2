@@ -25,6 +25,7 @@ import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Loader2, Plus, Pencil, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
+import { ImageUpload } from '@/components/admin/ImageUpload';
 
 interface Blog {
   id: string;
@@ -234,15 +235,12 @@ const AdminBlogs = () => {
                     />
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="image_url">Image URL</Label>
-                  <Input
-                    id="image_url"
-                    value={formData.image_url}
-                    onChange={(e) => setFormData(prev => ({ ...prev, image_url: e.target.value }))}
-                    placeholder="https://..."
-                  />
-                </div>
+                <ImageUpload
+                  label="Featured Image"
+                  folder="blogs"
+                  value={formData.image_url}
+                  onChange={(url) => setFormData(prev => ({ ...prev, image_url: url }))}
+                />
                 <div className="space-y-2">
                   <Label htmlFor="excerpt">Excerpt</Label>
                   <Textarea
