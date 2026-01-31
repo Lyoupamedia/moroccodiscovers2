@@ -8,6 +8,7 @@ import {
   LogOut,
   ChevronLeft,
   Menu,
+  Send,
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
@@ -16,6 +17,7 @@ import { useState } from 'react';
 
 const navItems = [
   { title: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+  { title: 'Trip Requests', href: '/admin/trip-requests', icon: Send },
   { title: 'Destinations', href: '/admin/destinations', icon: MapPin },
   { title: 'Blogs', href: '/admin/blogs', icon: FileText },
   { title: 'Integrations', href: '/admin/integrations', icon: Code },

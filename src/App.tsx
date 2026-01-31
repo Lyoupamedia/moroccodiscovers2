@@ -14,6 +14,7 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminTripRequests from "./pages/admin/AdminTripRequests";
 import AdminDestinations from "./pages/admin/AdminDestinations";
 import AdminBlogs from "./pages/admin/AdminBlogs";
 import AdminIntegrations from "./pages/admin/AdminIntegrations";
@@ -39,6 +40,7 @@ const App = () => (
             {/* Admin Routes */}
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/trip-requests" element={<AdminTripRequests />} />
             <Route path="/admin/destinations" element={<AdminDestinations />} />
             <Route path="/admin/blogs" element={<AdminBlogs />} />
             <Route path="/admin/integrations" element={<AdminIntegrations />} />
