@@ -56,6 +56,370 @@ export type Database = {
         }
         Relationships: []
       }
+      cms_media: {
+        Row: {
+          alt_text: string | null
+          caption: string | null
+          created_at: string
+          file_size: number | null
+          file_type: string
+          file_url: string
+          filename: string
+          height: number | null
+          id: string
+          site_id: string
+          updated_at: string
+          uploaded_by: string
+          width: number | null
+        }
+        Insert: {
+          alt_text?: string | null
+          caption?: string | null
+          created_at?: string
+          file_size?: number | null
+          file_type: string
+          file_url: string
+          filename: string
+          height?: number | null
+          id?: string
+          site_id: string
+          updated_at?: string
+          uploaded_by: string
+          width?: number | null
+        }
+        Update: {
+          alt_text?: string | null
+          caption?: string | null
+          created_at?: string
+          file_size?: number | null
+          file_type?: string
+          file_url?: string
+          filename?: string
+          height?: number | null
+          id?: string
+          site_id?: string
+          updated_at?: string
+          uploaded_by?: string
+          width?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cms_media_site_id_fkey"
+            columns: ["site_id"]
+            isOneToOne: false
+            referencedRelation: "cms_sites"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cms_menus: {
+        Row: {
+          created_at: string
+          id: string
+          items: Json | null
+          location: string | null
+          name: string
+          site_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          items?: Json | null
+          location?: string | null
+          name: string
+          site_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          items?: Json | null
+          location?: string | null
+          name?: string
+          site_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cms_menus_site_id_fkey"
+            columns: ["site_id"]
+            isOneToOne: false
+            referencedRelation: "cms_sites"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cms_pages: {
+        Row: {
+          content: string | null
+          created_at: string
+          excerpt: string | null
+          featured_image_url: string | null
+          id: string
+          menu_order: number | null
+          meta_description: string | null
+          meta_title: string | null
+          parent_id: string | null
+          published_at: string | null
+          site_id: string
+          slug: string
+          status: string
+          template: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string
+          excerpt?: string | null
+          featured_image_url?: string | null
+          id?: string
+          menu_order?: number | null
+          meta_description?: string | null
+          meta_title?: string | null
+          parent_id?: string | null
+          published_at?: string | null
+          site_id: string
+          slug: string
+          status?: string
+          template?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string | null
+          created_at?: string
+          excerpt?: string | null
+          featured_image_url?: string | null
+          id?: string
+          menu_order?: number | null
+          meta_description?: string | null
+          meta_title?: string | null
+          parent_id?: string | null
+          published_at?: string | null
+          site_id?: string
+          slug?: string
+          status?: string
+          template?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cms_pages_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "cms_pages"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cms_pages_site_id_fkey"
+            columns: ["site_id"]
+            isOneToOne: false
+            referencedRelation: "cms_sites"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cms_posts: {
+        Row: {
+          allow_comments: boolean | null
+          author_id: string
+          categories: string[] | null
+          content: string | null
+          created_at: string
+          excerpt: string | null
+          featured_image_url: string | null
+          id: string
+          meta_description: string | null
+          meta_title: string | null
+          published_at: string | null
+          site_id: string
+          slug: string
+          status: string
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          allow_comments?: boolean | null
+          author_id: string
+          categories?: string[] | null
+          content?: string | null
+          created_at?: string
+          excerpt?: string | null
+          featured_image_url?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          published_at?: string | null
+          site_id: string
+          slug: string
+          status?: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          allow_comments?: boolean | null
+          author_id?: string
+          categories?: string[] | null
+          content?: string | null
+          created_at?: string
+          excerpt?: string | null
+          featured_image_url?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          published_at?: string | null
+          site_id?: string
+          slug?: string
+          status?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cms_posts_site_id_fkey"
+            columns: ["site_id"]
+            isOneToOne: false
+            referencedRelation: "cms_sites"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cms_site_members: {
+        Row: {
+          created_at: string
+          id: string
+          role: string
+          site_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role?: string
+          site_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: string
+          site_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cms_site_members_site_id_fkey"
+            columns: ["site_id"]
+            isOneToOne: false
+            referencedRelation: "cms_sites"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cms_site_settings: {
+        Row: {
+          created_at: string
+          id: string
+          setting_key: string
+          setting_value: string | null
+          site_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          setting_key: string
+          setting_value?: string | null
+          site_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          setting_key?: string
+          setting_value?: string | null
+          site_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cms_site_settings_site_id_fkey"
+            columns: ["site_id"]
+            isOneToOne: false
+            referencedRelation: "cms_sites"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cms_sites: {
+        Row: {
+          created_at: string
+          custom_css: string | null
+          id: string
+          is_mysql_connected: boolean | null
+          mysql_database: string | null
+          mysql_host: string | null
+          mysql_password_encrypted: string | null
+          mysql_port: number | null
+          mysql_user: string | null
+          name: string
+          owner_id: string
+          site_favicon_url: string | null
+          site_logo_url: string | null
+          site_tagline: string | null
+          site_title: string | null
+          slug: string
+          theme: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          custom_css?: string | null
+          id?: string
+          is_mysql_connected?: boolean | null
+          mysql_database?: string | null
+          mysql_host?: string | null
+          mysql_password_encrypted?: string | null
+          mysql_port?: number | null
+          mysql_user?: string | null
+          name: string
+          owner_id: string
+          site_favicon_url?: string | null
+          site_logo_url?: string | null
+          site_tagline?: string | null
+          site_title?: string | null
+          slug: string
+          theme?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          custom_css?: string | null
+          id?: string
+          is_mysql_connected?: boolean | null
+          mysql_database?: string | null
+          mysql_host?: string | null
+          mysql_password_encrypted?: string | null
+          mysql_port?: number | null
+          mysql_user?: string | null
+          name?: string
+          owner_id?: string
+          site_favicon_url?: string | null
+          site_logo_url?: string | null
+          site_tagline?: string | null
+          site_title?: string | null
+          slug?: string
+          theme?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       destinations: {
         Row: {
           created_at: string
@@ -198,6 +562,14 @@ export type Database = {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
+        Returns: boolean
+      }
+      is_site_admin: {
+        Args: { _site_id: string; _user_id: string }
+        Returns: boolean
+      }
+      is_site_member: {
+        Args: { _site_id: string; _user_id: string }
         Returns: boolean
       }
     }
