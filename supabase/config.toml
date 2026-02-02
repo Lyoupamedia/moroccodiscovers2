@@ -1,1 +1,4 @@
 project_id = "afcchsmjhjdsswoifagt"
+
+[functions.mysql-proxy]
+verify_jwt = false
