@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, LayoutDashboard } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useAuth } from '@/hooks/useAuth';
 
 const navLinks = [
   { name: 'Destinations', href: '/#destinations' },
@@ -13,6 +14,7 @@ const navLinks = [
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAuth();
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-brown-dark/90 backdrop-blur-sm">
@@ -37,8 +39,20 @@ export const Header = () => {
             ))}
           </nav>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
+          {/* CTA Buttons */}
+          <div className="hidden md:flex items-center gap-3">
+            {user && (
+              <Button 
+                variant="outline"
+                asChild
+                className="text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/10 rounded-full px-4"
+              >
+                <Link to="/cms">
+                  <LayoutDashboard className="w-4 h-4 mr-2" />
+                  Dashboard
+                </Link>
+              </Button>
+            )}
             <Button 
               asChild
               className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-full px-6"
@@ -77,9 +91,21 @@ export const Header = () => {
                   {link.name}
                 </a>
               ))}
+              {user && (
+                <Button 
+                  variant="outline"
+                  asChild
+                  className="w-full rounded-full"
+                >
+                  <Link to="/cms" onClick={() => setIsOpen(false)}>
+                    <LayoutDashboard className="w-4 h-4 mr-2" />
+                    Dashboard
+                  </Link>
+                </Button>
+              )}
               <Button 
                 asChild
-                className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-full mt-4 w-full"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-full w-full"
               >
                 <Link to="/plan-trip" onClick={() => setIsOpen(false)}>Plan Your Trip</Link>
               </Button>
