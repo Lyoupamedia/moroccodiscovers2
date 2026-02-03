@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CMSLayout } from '@/components/cms/CMSLayout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -10,6 +10,8 @@ import { useToast } from '@/hooks/use-toast';
 import { ImageUpload } from '@/components/admin/ImageUpload';
 import { Loader2, Globe, Palette, Code } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ThemeSelector } from '@/components/cms/ThemeSelector';
+import { getThemeById } from '@/config/themes';
 
 const CMSSettings = () => {
   const { currentSite, updateSite } = useCMSSite();
@@ -26,6 +28,24 @@ const CMSSettings = () => {
     theme: currentSite?.theme || 'default',
     custom_css: currentSite?.custom_css || '',
   });
+
+  // Sync form data when currentSite changes
+  useEffect(() => {
+    if (currentSite) {
+      setFormData({
+        name: currentSite.name || '',
+        slug: currentSite.slug || '',
+        site_title: currentSite.site_title || '',
+        site_tagline: currentSite.site_tagline || '',
+        site_logo_url: currentSite.site_logo_url || '',
+        site_favicon_url: currentSite.site_favicon_url || '',
+        theme: currentSite.theme || 'default',
+        custom_css: currentSite.custom_css || '',
+      });
+    }
+  }, [currentSite]);
+
+  const selectedTheme = getThemeById(formData.theme);
 
   const handleChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -163,52 +183,61 @@ const CMSSettings = () => {
 
           {/* Branding Settings */}
           <TabsContent value="branding">
-            <Card>
-              <CardHeader>
-                <CardTitle>Branding</CardTitle>
-                <CardDescription>Logo, favicon, and visual identity</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="space-y-2">
-                  <Label>Site Logo</Label>
-                  <ImageUpload
-                    value={formData.site_logo_url}
-                    onChange={(url) => handleChange('site_logo_url', url)}
-                    folder={currentSite.id}
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    Recommended: PNG or SVG, at least 200px wide
-                  </p>
-                </div>
+            <div className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Logo & Favicon</CardTitle>
+                  <CardDescription>Upload your brand assets</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="grid gap-6 sm:grid-cols-2">
+                    <div className="space-y-2">
+                      <Label>Site Logo</Label>
+                      <ImageUpload
+                        value={formData.site_logo_url}
+                        onChange={(url) => handleChange('site_logo_url', url)}
+                        folder={currentSite.id}
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Recommended: PNG or SVG, at least 200px wide
+                      </p>
+                    </div>
 
-                <div className="space-y-2">
-                  <Label>Favicon</Label>
-                  <ImageUpload
-                    value={formData.site_favicon_url}
-                    onChange={(url) => handleChange('site_favicon_url', url)}
-                    folder={currentSite.id}
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    Recommended: Square image, 32x32 or 64x64 pixels
-                  </p>
-                </div>
+                    <div className="space-y-2">
+                      <Label>Favicon</Label>
+                      <ImageUpload
+                        value={formData.site_favicon_url}
+                        onChange={(url) => handleChange('site_favicon_url', url)}
+                        folder={currentSite.id}
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Recommended: Square image, 32x32 or 64x64 pixels
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
 
-                <div className="space-y-2">
-                  <Label htmlFor="theme">Theme</Label>
-                  <select
-                    id="theme"
-                    value={formData.theme}
-                    onChange={(e) => handleChange('theme', e.target.value)}
-                    className="w-full p-2 border rounded-md bg-background"
-                  >
-                    <option value="default">Default</option>
-                    <option value="modern">Modern</option>
-                    <option value="classic">Classic</option>
-                    <option value="minimal">Minimal</option>
-                  </select>
-                </div>
-              </CardContent>
-            </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Theme</CardTitle>
+                  <CardDescription>
+                    Choose a color theme for your website
+                    {selectedTheme && (
+                      <span className="ml-2 inline-flex items-center rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
+                        Current: {selectedTheme.name}
+                      </span>
+                    )}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ThemeSelector
+                    selectedTheme={formData.theme}
+                    onSelectTheme={(themeId) => handleChange('theme', themeId)}
+                  />
+                </CardContent>
+              </Card>
+            </div>
           </TabsContent>
 
           {/* Advanced Settings */}
