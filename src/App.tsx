@@ -37,7 +37,7 @@ import CMSMenus from "./pages/cms/CMSMenus";
 import CMSUsers from "./pages/cms/CMSUsers";
 import CMSDatabase from "./pages/cms/CMSDatabase";
 import CMSSettings from "./pages/cms/CMSSettings";
-import CMSNewSite from "./pages/cms/CMSNewSite";
+
 
 const queryClient = new QueryClient();
 
@@ -73,7 +73,7 @@ const App = () => (
               <Route path="/cms/users" element={<CMSUsers />} />
               <Route path="/cms/database" element={<CMSDatabase />} />
               <Route path="/cms/settings" element={<CMSSettings />} />
-              <Route path="/cms/sites/new" element={<CMSNewSite />} />
+              
               
               {/* Legacy Admin Routes (keeping for backwards compatibility) */}
               <Route path="/admin/login" element={<AdminLogin />} />

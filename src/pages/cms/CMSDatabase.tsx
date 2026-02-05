@@ -63,7 +63,7 @@ const CMSDatabase = () => {
     // Encrypt password (simple base64 for now - in production use proper encryption)
     const encryptedPassword = formData.mysql_password ? btoa(formData.mysql_password) : currentSite.mysql_password_encrypted;
 
-    const success = await updateSite(currentSite.id, {
+    const success = await updateSite({
       mysql_host: formData.mysql_host || null,
       mysql_port: formData.mysql_port,
       mysql_database: formData.mysql_database || null,
@@ -93,7 +93,7 @@ const CMSDatabase = () => {
 
     setIsLoading(true);
 
-    const success = await updateSite(currentSite.id, {
+    const success = await updateSite({
       mysql_host: null,
       mysql_port: 3306,
       mysql_database: null,

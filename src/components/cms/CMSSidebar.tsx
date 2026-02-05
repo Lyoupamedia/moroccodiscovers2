@@ -10,20 +10,11 @@ import {
   Globe,
   ChevronLeft,
   Menu as MenuIcon,
-  PlusCircle,
   Layers,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
-import { useCMSSite } from '@/hooks/useCMSSite';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 
 const navItems = [
   { title: 'Dashboard', href: '/cms', icon: LayoutDashboard },
@@ -39,7 +30,6 @@ const navItems = [
 export const CMSSidebar = () => {
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
-  const { sites, currentSite, setCurrentSite } = useCMSSite();
 
   const isActive = (path: string) => {
     if (path === '/cms') {
@@ -57,7 +47,7 @@ export const CMSSidebar = () => {
     >
       {/* Header */}
       <div className="p-4 border-b border-border">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between">
           {!collapsed && (
             <Link to="/cms" className="flex items-center gap-2">
               <Globe className="w-6 h-6 text-primary" />
@@ -73,37 +63,6 @@ export const CMSSidebar = () => {
             {collapsed ? <MenuIcon className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
           </Button>
         </div>
-
-        {/* Site Selector */}
-        {!collapsed && sites.length > 0 && (
-          <Select
-            value={currentSite?.id || ''}
-            onValueChange={(value) => {
-              const site = sites.find(s => s.id === value);
-              if (site) setCurrentSite(site);
-            }}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select a site" />
-            </SelectTrigger>
-            <SelectContent>
-              {sites.map((site) => (
-                <SelectItem key={site.id} value={site.id}>
-                  {site.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        )}
-
-        {!collapsed && (
-          <Link to="/cms/sites/new">
-            <Button variant="outline" size="sm" className="w-full mt-2">
-              <PlusCircle className="w-4 h-4 mr-2" />
-              New Site
-            </Button>
-          </Link>
-        )}
       </div>
 
       {/* Navigation */}

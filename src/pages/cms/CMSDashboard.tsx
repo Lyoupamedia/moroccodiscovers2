@@ -4,11 +4,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { useCMSSite } from '@/hooks/useCMSSite';
 import { supabase } from '@/integrations/supabase/client';
-import { FileText, Image, Layers, Users, PlusCircle, Database, ArrowRight, Globe } from 'lucide-react';
+import { FileText, Image, Layers, Users, Database, ArrowRight, Globe, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const CMSDashboard = () => {
-  const { currentSite, sites } = useCMSSite();
+  const { currentSite, isLoading } = useCMSSite();
   const [stats, setStats] = useState({
     pages: 0,
     posts: 0,
@@ -45,35 +45,24 @@ const CMSDashboard = () => {
     { title: 'Team Members', value: stats.users, icon: Users, color: 'text-orange-500', href: '/cms/users' },
   ];
 
-  // Show welcome screen if no sites
-  if (sites.length === 0) {
+  if (isLoading) {
     return (
       <CMSLayout>
-        <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
-          <Globe className="w-16 h-16 text-primary mb-6" />
-          <h1 className="font-heading text-4xl font-bold mb-4">Welcome to Your CMS</h1>
-          <p className="text-muted-foreground text-lg mb-8 max-w-md">
-            Create your first website to get started. You can manage pages, posts, media, and more.
-          </p>
-          <Link to="/cms/sites/new">
-            <Button size="lg" className="gap-2">
-              <PlusCircle className="w-5 h-5" />
-              Create Your First Site
-            </Button>
-          </Link>
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
         </div>
       </CMSLayout>
     );
   }
 
-  // Show site selection prompt if no current site
   if (!currentSite) {
     return (
       <CMSLayout>
         <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
-          <h1 className="font-heading text-3xl font-bold mb-4">Select a Site</h1>
-          <p className="text-muted-foreground mb-8">
-            Choose a site from the sidebar to start managing your content.
+          <Globe className="w-16 h-16 text-muted-foreground mb-6" />
+          <h1 className="font-heading text-3xl font-bold mb-4">Setting up your CMS</h1>
+          <p className="text-muted-foreground">
+            Please wait while we initialize your website...
           </p>
         </div>
       </CMSLayout>
@@ -90,7 +79,7 @@ const CMSDashboard = () => {
               Dashboard
             </h1>
             <p className="text-muted-foreground mt-1">
-              Welcome back! Here's an overview of {currentSite.name}
+              Welcome back! Here's an overview of your website
             </p>
           </div>
           <div className="flex gap-2">
