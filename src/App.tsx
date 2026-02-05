@@ -37,7 +37,7 @@ import CMSMenus from "./pages/cms/CMSMenus";
 import CMSUsers from "./pages/cms/CMSUsers";
 import CMSDatabase from "./pages/cms/CMSDatabase";
 import CMSSettings from "./pages/cms/CMSSettings";
-
+import CMSExport from "./pages/cms/CMSExport";
 
 const queryClient = new QueryClient();
 
@@ -72,8 +72,8 @@ const App = () => (
               <Route path="/cms/menus" element={<CMSMenus />} />
               <Route path="/cms/users" element={<CMSUsers />} />
               <Route path="/cms/database" element={<CMSDatabase />} />
+              <Route path="/cms/export" element={<CMSExport />} />
               <Route path="/cms/settings" element={<CMSSettings />} />
-              
               
               {/* Legacy Admin Routes (keeping for backwards compatibility) */}
               <Route path="/admin/login" element={<AdminLogin />} />

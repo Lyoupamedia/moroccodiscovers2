@@ -11,6 +11,7 @@ import {
   ChevronLeft,
   Menu as MenuIcon,
   Layers,
+  Download,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -24,6 +25,7 @@ const navItems = [
   { title: 'Menus', href: '/cms/menus', icon: Menu },
   { title: 'Users', href: '/cms/users', icon: Users },
   { title: 'MySQL', href: '/cms/database', icon: Database },
+  { title: 'Export', href: '/cms/export', icon: Download },
   { title: 'Settings', href: '/cms/settings', icon: Settings },
 ];
 

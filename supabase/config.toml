@@ -2,3 +2,6 @@ project_id = "afcchsmjhjdsswoifagt"
 
 [functions.mysql-proxy]
 verify_jwt = false
+
+[functions.mysql-export]
+verify_jwt = false
