@@ -56,7 +56,7 @@ const CMSSettings = () => {
 
     setIsLoading(true);
 
-    const success = await updateSite(currentSite.id, formData);
+    const success = await updateSite(formData);
 
     if (success) {
       toast({
