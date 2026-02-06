@@ -28,6 +28,7 @@ import AdminSettings from "./pages/admin/AdminSettings";
 
 // CMS Pages
 import CMSDashboard from "./pages/cms/CMSDashboard";
+import CMSHomepage from "./pages/cms/CMSHomepage";
 import CMSPages from "./pages/cms/CMSPages";
 import CMSPageEditor from "./pages/cms/CMSPageEditor";
 import CMSPosts from "./pages/cms/CMSPosts";
@@ -62,6 +63,7 @@ const App = () => (
               
               {/* CMS Routes */}
               <Route path="/cms" element={<CMSDashboard />} />
+              <Route path="/cms/homepage" element={<CMSHomepage />} />
               <Route path="/cms/pages" element={<CMSPages />} />
               <Route path="/cms/pages/new" element={<CMSPageEditor />} />
               <Route path="/cms/pages/:id" element={<CMSPageEditor />} />
