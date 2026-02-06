@@ -19,6 +19,7 @@ import { useState } from 'react';
 
 const navItems = [
   { title: 'Dashboard', href: '/cms', icon: LayoutDashboard },
+  { title: 'Homepage', href: '/cms/homepage', icon: Globe },
   { title: 'Pages', href: '/cms/pages', icon: FileText },
   { title: 'Posts', href: '/cms/posts', icon: Layers },
   { title: 'Media', href: '/cms/media', icon: Image },
