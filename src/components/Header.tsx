@@ -43,9 +43,9 @@ export const Header = () => {
           <div className="hidden md:flex items-center gap-3">
             {user && (
               <Button 
-                variant="outline"
+                variant="secondary"
                 asChild
-                className="text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/10 rounded-full px-4"
+                className="bg-secondary/90 text-secondary-foreground hover:bg-secondary rounded-full px-4"
               >
                 <Link to="/cms">
                   <LayoutDashboard className="w-4 h-4 mr-2" />
@@ -93,9 +93,9 @@ export const Header = () => {
               ))}
               {user && (
                 <Button 
-                  variant="outline"
+                  variant="secondary"
                   asChild
-                  className="w-full rounded-full"
+                  className="w-full bg-secondary/90 text-secondary-foreground hover:bg-secondary rounded-full"
                 >
                   <Link to="/cms" onClick={() => setIsOpen(false)}>
                     <LayoutDashboard className="w-4 h-4 mr-2" />
