@@ -7,22 +7,15 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { ImageUpload } from '@/components/admin/ImageUpload';
-import { Loader2, Home, Sparkles, Phone, Share2, LayoutTemplate, MapPin, Star, Users, Globe, FileText, Search } from 'lucide-react';
+import { Loader2, Home, Sparkles, Phone, Share2, LayoutTemplate, MapPin, Star, Users, FileText, Search } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 import { useCMSSite } from '@/hooks/useCMSSite';
 import { Switch } from '@/components/ui/switch';
-import { SiteIdentityTab } from '@/components/cms/homepage/SiteIdentityTab';
 import { FooterTab } from '@/components/cms/homepage/FooterTab';
 import { SEOTab } from '@/components/cms/homepage/SEOTab';
 
 interface HomepageSettings {
-  // Site Identity
-  site_name: string;
-  site_tagline: string;
-  site_description: string;
-  site_logo_url: string;
-  
   // Hero Section
   hero_badge_text: string;
   hero_title_line1: string;
@@ -96,12 +89,6 @@ interface HomepageSettings {
 }
 
 const defaultSettings: HomepageSettings = {
-  // Site Identity
-  site_name: 'Morocco Discovers',
-  site_tagline: 'Your gateway to authentic Moroccan experiences',
-  site_description: 'From ancient medinas to golden dunes, we craft unforgettable journeys.',
-  site_logo_url: '',
-  
   // Hero
   hero_badge_text: 'Discover the Magic of North Africa',
   hero_title_line1: 'Experience the',
@@ -302,12 +289,8 @@ const CMSHomepage = () => {
           </Button>
         </div>
 
-        <Tabs defaultValue="identity" className="space-y-6">
+        <Tabs defaultValue="hero" className="space-y-6">
           <TabsList className="flex flex-wrap h-auto gap-1">
-            <TabsTrigger value="identity" className="gap-2">
-              <Globe className="w-4 h-4" />
-              <span className="hidden sm:inline">Site</span>
-            </TabsTrigger>
             <TabsTrigger value="hero" className="gap-2">
               <Sparkles className="w-4 h-4" />
               <span className="hidden sm:inline">Hero</span>
@@ -337,20 +320,6 @@ const CMSHomepage = () => {
               <span className="hidden sm:inline">SEO</span>
             </TabsTrigger>
           </TabsList>
-
-          {/* Site Identity */}
-          <TabsContent value="identity">
-            <SiteIdentityTab
-              settings={{
-                site_name: settings.site_name,
-                site_tagline: settings.site_tagline,
-                site_description: settings.site_description,
-                site_logo_url: settings.site_logo_url,
-              }}
-              siteId={currentSite.id}
-              onChange={(field, value) => handleChange(field as keyof HomepageSettings, value)}
-            />
-          </TabsContent>
 
           {/* Hero Section */}
           <TabsContent value="hero" className="space-y-6">
