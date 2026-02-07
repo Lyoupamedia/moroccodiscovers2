@@ -7,13 +7,22 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { ImageUpload } from '@/components/admin/ImageUpload';
-import { Loader2, Home, Sparkles, Phone, Share2, LayoutTemplate, MapPin, Star, Users } from 'lucide-react';
+import { Loader2, Home, Sparkles, Phone, Share2, LayoutTemplate, MapPin, Star, Users, Globe, FileText, Search } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 import { useCMSSite } from '@/hooks/useCMSSite';
 import { Switch } from '@/components/ui/switch';
+import { SiteIdentityTab } from '@/components/cms/homepage/SiteIdentityTab';
+import { FooterTab } from '@/components/cms/homepage/FooterTab';
+import { SEOTab } from '@/components/cms/homepage/SEOTab';
 
 interface HomepageSettings {
+  // Site Identity
+  site_name: string;
+  site_tagline: string;
+  site_description: string;
+  site_logo_url: string;
+  
   // Hero Section
   hero_badge_text: string;
   hero_title_line1: string;
@@ -61,9 +70,39 @@ interface HomepageSettings {
   section_travel_essentials_visible: boolean;
   section_blogs_visible: boolean;
   section_cta_visible: boolean;
+  
+  // Footer
+  footer_description: string;
+  footer_copyright_text: string;
+  footer_quick_link_1_label: string;
+  footer_quick_link_1_url: string;
+  footer_quick_link_2_label: string;
+  footer_quick_link_2_url: string;
+  footer_quick_link_3_label: string;
+  footer_quick_link_3_url: string;
+  footer_quick_link_4_label: string;
+  footer_quick_link_4_url: string;
+  
+  // SEO
+  seo_meta_title: string;
+  seo_meta_description: string;
+  seo_keywords: string;
+  seo_og_title: string;
+  seo_og_description: string;
+  seo_og_image_url: string;
+  seo_twitter_title: string;
+  seo_twitter_description: string;
+  seo_twitter_image_url: string;
 }
 
 const defaultSettings: HomepageSettings = {
+  // Site Identity
+  site_name: 'Morocco Discovers',
+  site_tagline: 'Your gateway to authentic Moroccan experiences',
+  site_description: 'From ancient medinas to golden dunes, we craft unforgettable journeys.',
+  site_logo_url: '',
+  
+  // Hero
   hero_badge_text: 'Discover the Magic of North Africa',
   hero_title_line1: 'Experience the',
   hero_title_highlight: 'Enchanting',
@@ -105,6 +144,29 @@ const defaultSettings: HomepageSettings = {
   section_travel_essentials_visible: true,
   section_blogs_visible: true,
   section_cta_visible: true,
+  
+  // Footer
+  footer_description: 'Your gateway to authentic Moroccan experiences. From ancient medinas to golden dunes, we craft unforgettable journeys.',
+  footer_copyright_text: 'Morocco Discovers. All rights reserved.',
+  footer_quick_link_1_label: 'Destinations',
+  footer_quick_link_1_url: '/#destinations',
+  footer_quick_link_2_label: 'Experiences',
+  footer_quick_link_2_url: '/#experiences',
+  footer_quick_link_3_label: 'About Us',
+  footer_quick_link_3_url: '/about',
+  footer_quick_link_4_label: 'Contact',
+  footer_quick_link_4_url: '/contact',
+  
+  // SEO
+  seo_meta_title: 'Morocco Discovers - Authentic Moroccan Travel Experiences',
+  seo_meta_description: 'Discover Morocco with our expertly crafted travel experiences. From Sahara desert adventures to ancient medina tours, we create unforgettable journeys.',
+  seo_keywords: 'morocco travel, sahara tours, marrakech, fes, moroccan adventure, morocco trips',
+  seo_og_title: 'Morocco Discovers - Your Gateway to Morocco',
+  seo_og_description: 'Embark on an unforgettable journey through Morocco\'s ancient medinas, majestic mountains, and golden Sahara dunes.',
+  seo_og_image_url: '',
+  seo_twitter_title: 'Morocco Discovers',
+  seo_twitter_description: 'Discover the magic of Morocco with our authentic travel experiences.',
+  seo_twitter_image_url: '',
 };
 
 const CMSHomepage = () => {
@@ -163,14 +225,12 @@ const CMSHomepage = () => {
 
     setIsLoading(true);
     try {
-      // Prepare upsert data
       const upsertData = Object.entries(settings).map(([key, value]) => ({
         site_id: currentSite.id,
         setting_key: `homepage_${key}`,
         setting_value: String(value),
       }));
 
-      // Delete existing homepage settings and insert new ones
       const { error: deleteError } = await supabase
         .from('cms_site_settings')
         .delete()
@@ -242,8 +302,12 @@ const CMSHomepage = () => {
           </Button>
         </div>
 
-        <Tabs defaultValue="hero" className="space-y-6">
-          <TabsList className="grid grid-cols-5 w-full">
+        <Tabs defaultValue="identity" className="space-y-6">
+          <TabsList className="flex flex-wrap h-auto gap-1">
+            <TabsTrigger value="identity" className="gap-2">
+              <Globe className="w-4 h-4" />
+              <span className="hidden sm:inline">Site</span>
+            </TabsTrigger>
             <TabsTrigger value="hero" className="gap-2">
               <Sparkles className="w-4 h-4" />
               <span className="hidden sm:inline">Hero</span>
@@ -264,7 +328,29 @@ const CMSHomepage = () => {
               <Share2 className="w-4 h-4" />
               <span className="hidden sm:inline">Social</span>
             </TabsTrigger>
+            <TabsTrigger value="footer" className="gap-2">
+              <FileText className="w-4 h-4" />
+              <span className="hidden sm:inline">Footer</span>
+            </TabsTrigger>
+            <TabsTrigger value="seo" className="gap-2">
+              <Search className="w-4 h-4" />
+              <span className="hidden sm:inline">SEO</span>
+            </TabsTrigger>
           </TabsList>
+
+          {/* Site Identity */}
+          <TabsContent value="identity">
+            <SiteIdentityTab
+              settings={{
+                site_name: settings.site_name,
+                site_tagline: settings.site_tagline,
+                site_description: settings.site_description,
+                site_logo_url: settings.site_logo_url,
+              }}
+              siteId={currentSite.id}
+              onChange={(field, value) => handleChange(field as keyof HomepageSettings, value)}
+            />
+          </TabsContent>
 
           {/* Hero Section */}
           <TabsContent value="hero" className="space-y-6">
@@ -673,6 +759,44 @@ const CMSHomepage = () => {
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          {/* Footer */}
+          <TabsContent value="footer">
+            <FooterTab
+              settings={{
+                footer_description: settings.footer_description,
+                footer_copyright_text: settings.footer_copyright_text,
+                footer_quick_link_1_label: settings.footer_quick_link_1_label,
+                footer_quick_link_1_url: settings.footer_quick_link_1_url,
+                footer_quick_link_2_label: settings.footer_quick_link_2_label,
+                footer_quick_link_2_url: settings.footer_quick_link_2_url,
+                footer_quick_link_3_label: settings.footer_quick_link_3_label,
+                footer_quick_link_3_url: settings.footer_quick_link_3_url,
+                footer_quick_link_4_label: settings.footer_quick_link_4_label,
+                footer_quick_link_4_url: settings.footer_quick_link_4_url,
+              }}
+              onChange={(field, value) => handleChange(field as keyof HomepageSettings, value)}
+            />
+          </TabsContent>
+
+          {/* SEO */}
+          <TabsContent value="seo">
+            <SEOTab
+              settings={{
+                seo_meta_title: settings.seo_meta_title,
+                seo_meta_description: settings.seo_meta_description,
+                seo_keywords: settings.seo_keywords,
+                seo_og_title: settings.seo_og_title,
+                seo_og_description: settings.seo_og_description,
+                seo_og_image_url: settings.seo_og_image_url,
+                seo_twitter_title: settings.seo_twitter_title,
+                seo_twitter_description: settings.seo_twitter_description,
+                seo_twitter_image_url: settings.seo_twitter_image_url,
+              }}
+              siteId={currentSite.id}
+              onChange={(field, value) => handleChange(field as keyof HomepageSettings, value)}
+            />
           </TabsContent>
         </Tabs>
       </div>
