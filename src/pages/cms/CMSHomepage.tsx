@@ -55,13 +55,25 @@ interface HomepageSettings {
   social_tiktok: string;
   social_linkedin: string;
   
-  // Section Visibility
+  // Section Visibility & Content
   section_destinations_visible: boolean;
+  section_destinations_title: string;
+  section_destinations_subtitle: string;
   section_experiences_visible: boolean;
+  section_experiences_title: string;
+  section_experiences_subtitle: string;
   section_why_morocco_visible: boolean;
+  section_why_morocco_title: string;
+  section_why_morocco_subtitle: string;
   section_testimonials_visible: boolean;
+  section_testimonials_title: string;
+  section_testimonials_subtitle: string;
   section_travel_essentials_visible: boolean;
+  section_travel_essentials_title: string;
+  section_travel_essentials_subtitle: string;
   section_blogs_visible: boolean;
+  section_blogs_title: string;
+  section_blogs_subtitle: string;
   section_cta_visible: boolean;
   
   // Footer
@@ -125,11 +137,23 @@ const defaultSettings: HomepageSettings = {
   social_linkedin: '',
   
   section_destinations_visible: true,
+  section_destinations_title: 'Top Destinations',
+  section_destinations_subtitle: 'Discover the most captivating places Morocco has to offer, from ancient medinas to stunning natural wonders.',
   section_experiences_visible: true,
+  section_experiences_title: 'Unforgettable Moments',
+  section_experiences_subtitle: 'Immerse yourself in authentic Moroccan experiences crafted to create lasting memories and meaningful connections.',
   section_why_morocco_visible: true,
+  section_why_morocco_title: 'Why Choose Morocco',
+  section_why_morocco_subtitle: 'Morocco offers a unique blend of culture, adventure, and natural beauty.',
   section_testimonials_visible: true,
+  section_testimonials_title: 'What Travelers Say',
+  section_testimonials_subtitle: 'Hear from travelers who have experienced the magic of Morocco with us.',
   section_travel_essentials_visible: true,
+  section_travel_essentials_title: 'Travel Essentials',
+  section_travel_essentials_subtitle: 'Everything you need to know before your Moroccan adventure.',
   section_blogs_visible: true,
+  section_blogs_title: 'Stories & Travel Tips',
+  section_blogs_subtitle: 'Get inspired with our latest travel stories, tips, and guides to help you plan your perfect Moroccan adventure.',
   section_cta_visible: true,
   
   // Footer
@@ -505,36 +529,60 @@ const CMSHomepage = () => {
             </Card>
           </TabsContent>
 
-          {/* Section Visibility */}
-          <TabsContent value="sections">
-            <Card>
-              <CardHeader>
-                <CardTitle>Section Visibility</CardTitle>
-                <CardDescription>Choose which sections to display on your homepage</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {[
-                  { key: 'section_destinations_visible', label: 'Destinations Section', description: 'Featured travel destinations carousel' },
-                  { key: 'section_experiences_visible', label: 'Experiences Section', description: 'Travel experiences and activities' },
-                  { key: 'section_why_morocco_visible', label: 'Why Morocco Section', description: 'Reasons to visit Morocco' },
-                  { key: 'section_testimonials_visible', label: 'Testimonials Section', description: 'Customer reviews and testimonials' },
-                  { key: 'section_travel_essentials_visible', label: 'Travel Essentials Section', description: 'Essential travel information' },
-                  { key: 'section_blogs_visible', label: 'Blog Section', description: 'Latest blog posts' },
-                  { key: 'section_cta_visible', label: 'Call to Action Section', description: 'Bottom CTA with contact buttons' },
-                ].map((section) => (
-                  <div key={section.key} className="flex items-center justify-between p-4 rounded-lg border">
-                    <div>
-                      <p className="font-medium">{section.label}</p>
-                      <p className="text-sm text-muted-foreground">{section.description}</p>
+          {/* Section Visibility & Content */}
+          <TabsContent value="sections" className="space-y-6">
+            {[
+              { key: 'destinations', label: 'Destinations Section', description: 'Featured travel destinations carousel' },
+              { key: 'experiences', label: 'Experiences Section', description: 'Travel experiences and activities' },
+              { key: 'why_morocco', label: 'Why Morocco Section', description: 'Reasons to visit Morocco' },
+              { key: 'testimonials', label: 'Testimonials Section', description: 'Customer reviews and testimonials' },
+              { key: 'travel_essentials', label: 'Travel Essentials Section', description: 'Essential travel information' },
+              { key: 'blogs', label: 'Blog Section', description: 'Latest blog posts' },
+              { key: 'cta', label: 'Call to Action Section', description: 'Bottom CTA with contact buttons' },
+            ].map((section) => {
+              const visibleKey = `section_${section.key}_visible` as keyof HomepageSettings;
+              const titleKey = `section_${section.key}_title` as keyof HomepageSettings;
+              const subtitleKey = `section_${section.key}_subtitle` as keyof HomepageSettings;
+              const hasContent = titleKey in settings;
+
+              return (
+                <Card key={section.key}>
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <CardTitle className="text-lg">{section.label}</CardTitle>
+                        <CardDescription>{section.description}</CardDescription>
+                      </div>
+                      <Switch
+                        checked={settings[visibleKey] as boolean}
+                        onCheckedChange={(checked) => handleChange(visibleKey, checked)}
+                      />
                     </div>
-                    <Switch
-                      checked={settings[section.key as keyof HomepageSettings] as boolean}
-                      onCheckedChange={(checked) => handleChange(section.key as keyof HomepageSettings, checked)}
-                    />
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
+                  </CardHeader>
+                  {hasContent && (
+                    <CardContent className="space-y-4">
+                      <div className="space-y-2">
+                        <Label>Section Title</Label>
+                        <Input
+                          value={settings[titleKey] as string}
+                          onChange={(e) => handleChange(titleKey, e.target.value)}
+                          placeholder="Section title"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Section Description</Label>
+                        <Textarea
+                          value={settings[subtitleKey] as string}
+                          onChange={(e) => handleChange(subtitleKey, e.target.value)}
+                          placeholder="Section description"
+                          rows={2}
+                        />
+                      </div>
+                    </CardContent>
+                  )}
+                </Card>
+              );
+            })}
           </TabsContent>
 
           {/* CTA Section */}
