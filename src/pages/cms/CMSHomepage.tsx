@@ -53,7 +53,7 @@ interface HomepageSettings {
   social_twitter: string;
   social_youtube: string;
   social_tiktok: string;
-  social_linkedin: string;
+  social_pinterest: string;
   
   // Section Visibility & Content
   section_destinations_visible: boolean;
@@ -134,7 +134,7 @@ const defaultSettings: HomepageSettings = {
   social_twitter: '',
   social_youtube: '',
   social_tiktok: '',
-  social_linkedin: '',
+  social_pinterest: '',
   
   section_destinations_visible: true,
   section_destinations_title: 'Top Destinations',
@@ -765,12 +765,12 @@ const CMSHomepage = () => {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="social_linkedin">LinkedIn</Label>
+                    <Label htmlFor="social_pinterest">Pinterest</Label>
                     <Input
-                      id="social_linkedin"
-                      value={settings.social_linkedin}
-                      onChange={(e) => handleChange('social_linkedin', e.target.value)}
-                      placeholder="https://linkedin.com/company/yourpage"
+                      id="social_pinterest"
+                      value={settings.social_pinterest}
+                      onChange={(e) => handleChange('social_pinterest', e.target.value)}
+                      placeholder="https://pinterest.com/yourpage"
                     />
                   </div>
                 </div>
