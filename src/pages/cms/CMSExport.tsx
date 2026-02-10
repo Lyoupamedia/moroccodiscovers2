@@ -18,6 +18,7 @@ import {
   Package
 } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
+import { ImportDataCard } from '@/components/cms/export/ImportDataCard';
 
 interface ExportOptions {
   pages: boolean;
@@ -249,11 +250,14 @@ const CMSExport = () => {
       <div className="space-y-6 max-w-2xl">
         {/* Header */}
         <div>
-          <h1 className="font-heading text-3xl font-bold text-foreground">Export Data</h1>
+          <h1 className="font-heading text-3xl font-bold text-foreground">Import / Export</h1>
           <p className="text-muted-foreground mt-1">
-            Export your website content and data as JSON
+            Import content from another site or export your data as JSON
           </p>
         </div>
+
+        {/* Import Section */}
+        <ImportDataCard currentSite={currentSite} />
 
         {/* Export Options */}
         <Card>
