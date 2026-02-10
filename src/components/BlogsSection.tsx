@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar } from 'lucide-react';
 import Autoplay from 'embla-carousel-autoplay';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { format } from 'date-fns';
 import {
   Carousel,
   CarouselContent,
@@ -9,10 +12,19 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 
-const blogs = [
+interface BlogPost {
+  title: string;
+  excerpt: string;
+  image: string;
+  date: string;
+  category: string;
+  readTime: string;
+}
+
+const fallbackBlogs: BlogPost[] = [
   {
     title: '10 Must-Visit Hidden Gems in Marrakech',
-    excerpt: 'Discover the secret spots that most tourists miss in the Red City. From hidden riads to local markets, explore Marrakech like a local.',
+    excerpt: 'Discover the secret spots that most tourists miss in the Red City.',
     image: 'https://images.unsplash.com/photo-1539020140153-e479b8c22e70?w=600&h=400&fit=crop',
     date: 'January 15, 2026',
     category: 'Travel Tips',
@@ -20,47 +32,15 @@ const blogs = [
   },
   {
     title: 'The Ultimate Sahara Desert Experience',
-    excerpt: 'Everything you need to know about camping under the stars in the Moroccan Sahara. Tips for an unforgettable desert adventure.',
+    excerpt: 'Everything you need to know about camping under the stars in the Moroccan Sahara.',
     image: 'https://images.unsplash.com/photo-1509023464722-18d996393ca8?w=600&h=400&fit=crop',
     date: 'January 10, 2026',
     category: 'Adventures',
     readTime: '7 min read',
   },
-  {
-    title: 'A Food Lover\'s Guide to Moroccan Cuisine',
-    excerpt: 'From tagine to couscous, explore the rich flavors of Morocco. Learn about traditional dishes and the best places to try them.',
-    image: 'https://images.unsplash.com/photo-1541518763669-27fef04b14ea?w=600&h=400&fit=crop',
-    date: 'January 5, 2026',
-    category: 'Food & Culture',
-    readTime: '6 min read',
-  },
-  {
-    title: 'Exploring the Blue Pearl: Chefchaouen Guide',
-    excerpt: 'Why is this mountain town painted blue? Uncover the mysteries and beauty of Morocco\'s most photogenic destination.',
-    image: 'https://images.unsplash.com/photo-1553522991-71439aa62779?w=600&h=400&fit=crop',
-    date: 'December 28, 2025',
-    category: 'Destinations',
-    readTime: '4 min read',
-  },
-  {
-    title: 'Best Time to Visit Morocco: Season Guide',
-    excerpt: 'Planning your trip? Learn about the best seasons to visit different regions of Morocco for the perfect weather and experiences.',
-    image: 'https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?w=600&h=400&fit=crop',
-    date: 'December 20, 2025',
-    category: 'Travel Tips',
-    readTime: '5 min read',
-  },
-  {
-    title: 'Traditional Moroccan Crafts: A Shopping Guide',
-    excerpt: 'From leather goods to ceramics, discover the authentic crafts of Morocco and where to find the best artisan products.',
-    image: 'https://images.unsplash.com/photo-1531219572328-a0171b4448a3?w=600&h=400&fit=crop',
-    date: 'December 15, 2025',
-    category: 'Shopping',
-    readTime: '6 min read',
-  },
 ];
 
-const BlogCard = ({ blog }: { blog: typeof blogs[0] }) => {
+const BlogCard = ({ blog }: { blog: BlogPost }) => {
   return (
     <div className="group rounded-2xl overflow-hidden bg-card border border-border h-full flex flex-col">
       {/* Image */}
@@ -106,10 +86,38 @@ const BlogCard = ({ blog }: { blog: typeof blogs[0] }) => {
 };
 
 export const BlogsSection = () => {
+  const [blogs, setBlogs] = useState<BlogPost[]>(fallbackBlogs);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      const { data, error } = await supabase
+        .from('blogs')
+        .select('*')
+        .eq('is_published', true)
+        .order('published_at', { ascending: false })
+        .limit(10);
+
+      if (!error && data && data.length > 0) {
+        setBlogs(
+          data.map((post) => ({
+            title: post.title,
+            excerpt: post.excerpt || '',
+            image: post.image_url || 'https://images.unsplash.com/photo-1539020140153-e479b8c22e70?w=600&h=400&fit=crop',
+            date: post.published_at
+              ? format(new Date(post.published_at), 'MMMM d, yyyy')
+              : format(new Date(post.created_at), 'MMMM d, yyyy'),
+            category: post.category || 'General',
+            readTime: post.read_time || '5 min read',
+          }))
+        );
+      }
+    };
+    fetchBlogs();
+  }, []);
+
   return (
     <section id="blogs" className="py-24 bg-background">
       <div className="container mx-auto px-4">
-        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -127,7 +135,6 @@ export const BlogsSection = () => {
           </p>
         </motion.div>
 
-        {/* Blogs Carousel */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -163,7 +170,6 @@ export const BlogsSection = () => {
             <CarouselNext className="hidden md:flex -right-12 bg-primary text-primary-foreground hover:bg-primary/90 border-none" />
           </Carousel>
           
-          {/* Mobile navigation hint */}
           <div className="flex justify-center gap-2 mt-6 md:hidden">
             <span className="text-muted-foreground text-sm">Swipe to read more articles</span>
           </div>
